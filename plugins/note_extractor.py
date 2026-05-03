@@ -127,9 +127,8 @@ class NoteExtractor(interfaces.plugins.PluginInterface):
 					if content_virtual_address == False:
 						continue
 					else:
-						print(f"Content found after StaticCache.dat VAD at {hex(content_virtual_address)}")
 						content, raw_content = get_content(content_virtual_address, layer)
-						yield(0, [hex(content_virtual_address), content, raw_content])
+						yield(0, [hex(content_virtual_address), "1 (StaticCacheVad)", content, raw_content])
 						continue
 
 				# method 2. VAD contains valid address at offset 8
@@ -137,14 +136,14 @@ class NoteExtractor(interfaces.plugins.PluginInterface):
 				if content_virtual_address == False:
 					continue
 				else:
-					print(f"valid VAD found at {hex(content_virtual_address)}")
 					content, raw_content = get_content(content_virtual_address, layer)
-					yield(0, [hex(content_virtual_address), content, raw_content])
+					yield(0, [hex(content_virtual_address), "2 (BruteForce)", content, raw_content])
 					continue
 
 	def run(self):
 		return renderers.TreeGrid([
 			("Virtual Address", str),
+			("Method", str),
 			("Content", str),
-			("Content as Bytes", bytes)
+			("Raw Content", bytes)
 		], self._generator())
