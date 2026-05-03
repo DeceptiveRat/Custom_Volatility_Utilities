@@ -127,6 +127,7 @@ class NoteExtractor(interfaces.plugins.PluginInterface):
 					if content_virtual_address == False:
 						continue
 					else:
+						print(f"Content found after StaticCache.dat VAD at {hex(content_virtual_address)}")
 						content, raw_content = get_content(content_virtual_address, layer)
 						yield(0, [hex(content_virtual_address), content, raw_content])
 						continue
@@ -136,7 +137,7 @@ class NoteExtractor(interfaces.plugins.PluginInterface):
 				if content_virtual_address == False:
 					continue
 				else:
-					print(f"Getting content at {hex(content_virtual_address)}...")
+					print(f"valid VAD found at {hex(content_virtual_address)}")
 					content, raw_content = get_content(content_virtual_address, layer)
 					yield(0, [hex(content_virtual_address), content, raw_content])
 					continue
